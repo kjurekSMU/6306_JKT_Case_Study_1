@@ -111,9 +111,15 @@ us_states_area = st_area(st_as_sfc(st_bbox(us_states2163)))
 
 statenames <- read.csv("statenames.csv")
 mapdata <- merge(breweriesdf, statenames, by.x = "State", by.y = "State")
+<<<<<<< HEAD
 
 colnames(mapdata) <- c("State", "Brewery_ID", "Brewery Name", "City", "Beer_ID", "Beer Name", "ABV", "IBU",
                        "Style", "Ounces", "NAME")
+=======
+str(mapdata)
+colnames(mapdata) <- c("Brewery_ID", "Brewery Name", "City", "State", "Beer Name", "Beer_ID", "ABV", "IBU", "Style",
+                       "Ounces", "NAME")
+>>>>>>> 05c8c47df5810322708b8142b16e837f44ee4938
 map_and_data <- inner_join(us_states2163, mapdata)
 state_data <- map_and_data%>%group_by(NAME)%>%summarize('NumberOfBreweries' = n())
 
