@@ -1,0 +1,137 @@
+---
+title: "Travis_JKT"
+author: "Travis Daun"
+date: "12/19/2018"
+output: 
+  html_document:
+    keep_md: true
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## 1. How many breweries are present in each state?
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+beers <- read.csv("Beers.csv")
+breweries <- read.csv("Breweries.csv")
+str(breweries)
+str(beers)
+#Remove any whitespace in state names
+breweries$State <- gsub("\\s+", "", breweries$State)
+#group and sumaarize by state
+by_state <- breweries%>%group_by(State)%>%summarize('NumberOfBreweries' = n())
+
+#Plot number of breweries by State
+ggplot(data = by_state, aes(x=reorder(State, -NumberOfBreweries), y=NumberOfBreweries)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+## 2. Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.
+```{r}
+#merge beer data with brewery data
+breweriesdf <- merge(breweries, beers, by.x = "Brew_ID", by.y ="Brewery_id")
+
+colnames(breweriesdf) <- c("Brewery_ID", "Brewery Name", "City", "State", "Beer Name", "Beer_ID", "ABV", "IBU", "Style",
+                           "Ounces")
+head(breweriesdf, 6)
+```
+## 3. Report the number of NA's in each column.
+```{r}
+i<-1
+na_df <- data.frame()
+while(i<=10) {
+  na_df[1,i] <- sum(is.na(breweriesdf[,i]))
+    i<- i+1
+}
+colnames(na_df)<- c("Brewery_ID", "Brewery Name", "City", "State", "Beer Name", "Beer_ID", "ABV", "IBU", "Style",
+                    "Ounces")
+na_df
+```
+##4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
+```{r}
+#Median ABV and IBU by state
+Medians <- breweriesdf%>%group_by(State)%>%summarise(Median_ABV = median(na.omit(ABV)), 
+                                                        Median_IBU = median(na.omit(IBU)))
+
+Medians%>%summarise(max = max(na.omit(Median_ABV)))
+Medians%>%summarise(min = min(na.omit(Median_ABV)))
+
+Medians%>%summarise(max = max(na.omit(Median_IBU)))
+Medians%>%summarise(min = min(na.omit(Median_IBU)))
+```
+## 5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
+```{r}
+
+head(arrange(Medians, desc(Median_ABV)),3)
+tail(arrange(Medians, desc(Median_ABV)),2)
+head(arrange(Medians, desc(Median_IBU)),2)
+tail(arrange(Medians, desc(Median_IBU)),3)
+
+ggplot(data = Medians, aes(x=reorder(State, -Median_ABV), y=Median_ABV)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+
+ggplot(data = Medians, aes(x=reorder(State, -Median_IBU), y=Median_IBU)) +
+  geom_bar(stat="identity") +
+  theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+## 6. Summary statistics for the ABV variable.
+
+```{r}
+summary(Medians$Median_ABV)
+```
+
+## 7. Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.
+Yes as the bitterness (IBU) of the beer increase, generally the alcohol content (ABV) increase.
+```{r}
+ggplot(data=Medians) +
+  geom_point(
+    mapping = aes(x=Median_ABV, y=Median_IBU),
+    position="jitter"
+  )
+ggplot(data=breweriesdf) +
+  geom_point(mapping = aes(x=ABV, y=IBU),
+             position = "jitter")
+```
+## Placing into interactive map
+```{r}
+library(tidyverse)
+library(spData) # contains datasets used in this example
+library(sf)     # for handling spatial (vector) data
+library(tmap)   # map making package
+library(grid)   # to re-arrange maps
+
+us_states2163 = st_transform(us_states, 2163)
+us_states_area = st_area(st_as_sfc(st_bbox(us_states2163)))
+
+statenames <- read.csv("statenames.csv")
+mapdata <- merge(breweriesdf, statenames, by.x = "State", by.y = "State")
+str(mapdata)
+colnames(mapdata) <- c("Brewery_ID", "Brewery Name", "City", "State", "Beer Name", "Beer_ID", "ABV", "IBU", "Style",
+                       "Ounces", "NAME")
+map_and_data <- inner_join(us_states2163, mapdata)
+state_data <- map_and_data%>%group_by(NAME)%>%summarize('NumberOfBreweries' = n())
+
+ggplot(state_data) +
+  geom_sf(aes(fill = NumberOfBreweries))+
+  scale_fill_gradient(low= "#5681F7", high ="#132B43")
+
+tmap_mode("view")
+
+tm_shape(state_data) +
+  tm_polygons("NumberOfBreweries", id="NAME", palette = "Blues")
+
+Medians <- map_and_data%>%group_by(NAME)%>%summarise(Median_ABV = median(na.omit(ABV)), 
+                                                     Median_IBU = median(na.omit(IBU)))
+
+tm_shape(Medians) +
+  tm_polygons("Median_ABV", id="NAME", palette = "Oranges")
+
+tm_shape(Medians) +
+  tm_polygons("Median_IBU", id="NAME", palette = "Greens")
+```
