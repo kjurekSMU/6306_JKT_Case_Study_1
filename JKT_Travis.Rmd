@@ -9,6 +9,16 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.width=10,fig.height=11)
 ```
+
+# Introdution
+We wish to develope a strategy for the deployment of a new beer, Blue Beer's Picasso.
+Blue Beer's Picasso has higher than typical alcohol content (ABV= 0.06) while having
+a lower than typical bitterness rating (IBU = 30). Market research has shown that Millenials
+and iGen (>=21) prefer locally brewed beers, that have a high alcohol content but are not drawn
+to highly bitter beers. Blue Beer's Picasso is looking to launch their brewery production in an
+area with fewer than 10 breweries in the state, has a supporting demographic, and prefers beers 
+with Blue Beer's ABV and IBU characteristics.
+
 ## 1. How many breweries are present in each state?
 ```{r Question_1}
 #Load required packages
@@ -53,6 +63,7 @@ by_state
 #Plot number of breweries by State
 ggplot(data = by_state, aes(x=reorder(State, NumberOfBreweries), y=NumberOfBreweries, fill=-NumberOfBreweries)) +
   geom_bar(stat="identity") +
+  geom_text(aes(label=NumberOfBreweries), hjust=1.2, vjust=0.5, color="white", size=2.5) +
   ggtitle("Number of Breweries by State") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
   labs(y="Number of Breweries", x="State", fill="NumberOfBreweries") + 
@@ -96,7 +107,7 @@ tail(breweriesdf, 6)
 colSums(is.na(breweriesdf))
 ```
 
-##4. Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
+##4a. Compute the median alcohol content and international bitterness unit for each state.
 ```{r Question_4a}
 #Median ABV and IBU by state
 Medians <- breweriesdf%>%group_by(State)%>%summarise(Median_ABV = median(na.omit(ABV)),                                                      Median_IBU = median(na.omit(IBU)))
@@ -119,31 +130,41 @@ tail(arrange(Medians, desc(Median_IBU)),3)
 
 ggplot(data = Medians, aes(x=reorder(State, Median_ABV), y=Median_ABV, fill=-Median_IBU )) +
   geom_bar(stat="identity") +
+  geom_text(aes(label=Median_ABV), hjust=1.2, vjust=0.5, color="white", size=2.5) +
   ggtitle("Median ABV by State") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-  labs(y="Alcohol by Volume (ABV)", x="State", fill="Median_IBU") + 
+  labs(y="Alcohol by Volume (ABV)", x="State", subtitle="Filled by Median IBU") + 
   coord_flip() + 
   guides(fill=FALSE)
 
 ggplot(data = Medians, aes(x=reorder(State, Median_IBU), y=Median_IBU, fill=-Median_ABV )) +
   geom_bar(stat="identity") +
-  ggtitle("Median ABV by State") + 
+  geom_text(aes(label=Median_IBU), hjust=1.2, vjust=0.5, color="white", size=2.5) +
+  ggtitle("Median IBU by State") + 
   theme(plot.title = element_text(hjust = 0.5)) + 
-  labs(y="Alcohol by Volume (ABV)", x="State", fill="Median_ABV") + 
+  labs(y="International Bitterness Unit (IBU)", x="State", subtitle="Filled by Median ABV") + 
   coord_flip() + 
   guides(fill=FALSE)
 ```
 
-## 5. Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
-```{r}
+## 5a. Which state has the maximum alcoholic (ABV) beer?
+The states with the highest maximum alcoholic (ABV) beer is the District of Columbia and Kentucky with a median ABV of 0.0625.
+```{r Question_5a}
 
 head(arrange(Medians, desc(Median_ABV)),3)
 tail(arrange(Medians, desc(Median_ABV)),2)
+```
+
+## 5b.  Which state has the most bitter (IBU) beer?
+The states with the most bitter (IBU) beer is Maine with a median IBU of 61.
+```{r Question_5b}
+
 head(arrange(Medians, desc(Median_IBU)),2)
 tail(arrange(Medians, desc(Median_IBU)),3)
 ```
-## 5a. Interactive Dynamic Maps for ABV and IBU
-```{r Question_5a}
+
+## 5c. Interactive Dynamic Maps for ABV and IBU
+```{r Question_5c}
 #For interactive mapping data
 mapdata <- breweriesdf
 str(mapdata)
