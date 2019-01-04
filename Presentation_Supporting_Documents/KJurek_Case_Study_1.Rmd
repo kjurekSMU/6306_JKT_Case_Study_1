@@ -173,7 +173,9 @@ mean_ibu_by_state=bandb %>% group_by(bandb$State) %>% summarize(meanIBU=mean(IBU
 names(mean_abv_by_state)=c("State", "meanABV")
 names(mean_ibu_by_state)=c("State", "meanIBU")
 
+write.csv(median_abv_by_state, file = "State_Median_ABV.csv")
 write.csv(mean_abv_by_state, file = "State_Mean_ABV.csv")
+write.csv(median_ibu_by_state, file = "State_Median_IBU.csv")
 write.csv(mean_ibu_by_state, file = "State_Mean_IBU.csv")
 
 ```
