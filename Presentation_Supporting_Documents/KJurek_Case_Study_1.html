@@ -634,7 +634,9 @@ mean_ibu_by_state=bandb %&gt;% group_by(bandb$State) %&gt;% summarize(meanIBU=me
 names(mean_abv_by_state)=c(&quot;State&quot;, &quot;meanABV&quot;)
 names(mean_ibu_by_state)=c(&quot;State&quot;, &quot;meanIBU&quot;)
 
+write.csv(median_abv_by_state, file = &quot;State_Median_ABV.csv&quot;)
 write.csv(mean_abv_by_state, file = &quot;State_Mean_ABV.csv&quot;)
+write.csv(median_ibu_by_state, file = &quot;State_Median_IBU.csv&quot;)
 write.csv(mean_ibu_by_state, file = &quot;State_Mean_IBU.csv&quot;)</code></pre>
 <div class="line-block"><br />
 <br />
