@@ -1,0 +1,219 @@
+---
+title: "Case_Study_1"
+author: "Karl J. Jurek"
+date: "December 27, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+# Loading the 'Beers.csv' file into the 'beers' dataframe
+beers=read.csv("Beers.csv", header=T, stringsAsFactors=F)
+
+# Loading the 'Breweries.csv' file into the 'breweries' dataframe
+breweries=read.csv("Breweries.csv", header=T, stringsAsFactors=F)
+```
+
+## Question 1: How many breweries are present in each state?
+
+```{r Question_1, echo=TRUE}
+# Adding the 'plyr' library
+library('plyr')
+
+# Creating a count of all facilities in each state in the 'count_of_breweries_by_state' data frame
+count_of_breweries_by_state=ddply(breweries, .(breweries$State), nrow)
+
+# Assigning useful names to the columns / variables in the 'count_of_breweries_by_state' data frame
+names(count_of_breweries_by_state)=c("State", "Count")
+
+# Displaying the count of breweries by state
+head(count_of_breweries_by_state)
+
+# Displaying the count of breweries by Count
+head(arrange(count_of_breweries_by_state, desc(Count)))
+
+```
+
+## Question 2A: Merge beer data with the breweries data. 
+
+```{r Question_2A, echo=TRUE}
+# Combining the 'beers' and 'breweries' dataframes into the 'bandb' dataframe
+bandb=merge(beers, breweries, by=c("Brewery_id"), by.y=c("Brew_ID"), all=T)
+
+# Removing extra space from the 'State' column in the 'bandb' dataframe
+bandb$State=gsub(" ", "", bandb$State)
+
+# Assigning useful name to the 'Name.x' and 'Name.y' columns
+names(bandb)[2]="BeerName"
+names(bandb)[8]="Brewery"
+```
+
+
+## Question 2B: Print the first 6 observations and the last six observations to check the merged file.
+
+```{r Question_2B, echo=TRUE}
+# Displaying the first six rows of the merged dataframe, 'bandb'
+head(bandb)
+
+# Displaying the last six rows of the merged dataframe, 'bandb'
+tail(bandb)
+```
+
+## Question 3: Report the number of NA's in each column.
+
+```{r Question_3, echo=TRUE}
+colSums(is.na(bandb))
+```
+
+## Question 4A: Compute the median alcohol content (ABV) for each state.
+```{r Question_4A, echo=TRUE}
+# Adding 'dplr' library to project
+library('dplyr')
+
+# Getting the median ABV for each state
+median_abv_by_state=bandb %>% group_by(bandb$State) %>% summarize(medianabv=median(ABV, na.rm=T))
+
+# Assigning useful name to the 'median_abv_by_state' dataframe
+names(median_abv_by_state)=c("State", "medianABV")
+
+# Displaying partial results for the 'median_abv_by_state' dataframe by State
+head(median_abv_by_state)
+
+# Displaying partial results for the 'median_abv_by_state' dataframe by median ABV
+head(arrange(median_abv_by_state, desc(medianABV)))
+```
+
+## Question 4B: Compute the median international bitterness unit (IBU) for each state.
+```{r Question_4B, echo=TRUE}
+# Getting the median IBU for each state
+median_ibu_by_state=bandb %>% group_by(bandb$State) %>% summarize(medianibu=median(IBU, na.rm=T))
+
+# Assigning useful names to the 'median_ibu_by_state' dataframe
+names(median_ibu_by_state)=c("State", "medianIBU")
+
+# Displaying partial results for the 'median_ibu_by_state' dataframe by State
+head(median_ibu_by_state)
+
+# Displaying partial results for the 'median_ibu_by_state' dataframe by median IBU
+head(arrange(median_ibu_by_state, desc(medianIBU)))
+```
+
+## Question 4C: Plot a bar chart to compare alcohol content (ABV) for each state.
+```{r Question_4C, fig.width=10,fig.height=11, echo=TRUE}
+# Adjusted the size of the plot with [fig.width=10,fig.height=11,] in the code chunk for this section
+
+# Adding the 'ggplot2' library to the project
+library('ggplot2')
+
+# Creating bar graph of the 'median_abv_by_state' dataframe
+ggplot(median_abv_by_state, aes(reorder(State, medianABV), y=medianABV, fill=medianABV)) + 
+  geom_bar(stat="identity") +
+  geom_text(aes(label=medianABV), hjust=1.2, vjust=0.5, color="white", size=2.5) +
+  ggtitle("Median ABV by State") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  labs(x="Alcohol by Volume (ABV)", y="States", fill="medianABV") + 
+  coord_flip() + 
+  guides(fill=FALSE)
+```
+
+## Question 4D: Plot a bar chart to compare international bitterness unit (IBU) for each state.
+```{r Question_4D, fig.width=10,fig.height=11, echo=TRUE}
+# Adjusted the size of the plot with [fig.width=10,fig.height=11,] in the code chunk for this section
+
+# Removing rows with 'NA' values
+no_na_median_ibu=data.frame(median_ibu_by_state[!is.na(median_ibu_by_state$medianIBU), ])
+
+# Creating bar graph of the 'no_na_median_ibu' dataframe
+ggplot(no_na_median_ibu, aes(reorder(State, medianIBU), y=medianIBU, fill=medianIBU)) + 
+  geom_bar(stat="identity") +
+  geom_text(aes(label=medianIBU), hjust=1.2, vjust=0.5, color="white", size=2.5) +
+  ggtitle("Median IBU by State") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  labs(x="International Bitterness Unit (IBU)", y="States", fill="medianIBU") + 
+  coord_flip() + 
+  guides(fill=FALSE)
+```
+
+## Question 5A: Which state has the maximum alcoholic (ABV) beer?
+```{r Question_5A, echo=TRUE}
+# Getting the maximum ABV for each state
+max_abv_by_state=bandb %>% group_by(bandb$State) %>% summarize(maxABV=max(ABV, na.rm=T))
+
+# Assigning useful names to the 'median_abv_by_state' dataframe
+names(max_abv_by_state)=c("State", "maxABV")
+
+# Displaying partial results for the 'median_abv_by_state' dataframe
+head(arrange(median_abv_by_state, desc(median_abv_by_state$medianABV)))
+```
+
+## Question 5B: Which state has the most bitter (IBU) beer?
+```{r Question_5B, echo=TRUE}
+# Getting the maximum IBU for each state
+max_ibu_by_state=bandb %>% group_by(bandb$State) %>% summarize(maxibu=max(IBU, na.rm=T))
+
+# Assigning useful names to the 'median_ibu_by_state' dataframe
+names(max_ibu_by_state)=c("State", "maxIBU")
+
+# Displaying partial results for the 'median_ibu_by_state' dataframe
+head(arrange(median_ibu_by_state, desc(median_ibu_by_state$medianIBU)))
+```
+
+## Question 6: Summary statistics for the ABV variable.
+```{r Question_6, echo=TRUE}
+# Adding the 'purrr' library to the project
+library(purrr)
+
+# Generalized summary of the 'bandb$ABV' column
+summary_abv=summary(bandb$ABV)
+
+# Summarizing all of the 'bandb' dataframe by state
+summary_by_state=bandb %>% split(bandb$State) %>% map(summary)
+
+# Displaying partial results for the 'summary_by_state' list
+head(summary_by_state, 1)
+```
+
+## Question 7A: Is there an apparent relationship between the bitterness of the beer and its alcoholic content?
+
+|       <b>ANSWER:</b>
+|
+|               There does not appear to be a correlation between bitterness (IBU) and the alcoholic content (ABV).  
+|               The scatter plot below shows the ABV / IBU of 1405 different beers in the United States.  If there was  
+|               a correlation you would expect the data points to be closely centered around the linear regression line.
+|               Instead the data is all over the place with no consistency.
+
+## Question 7B: Draw a scatter plot.
+```{r Question_7B, fig.width=10,fig.height=6, echo=TRUE}
+# Creating a scatterplot of the ABV vs IBU data
+ggplot(bandb, aes(x=bandb$ABV, y=bandb$IBU)) + geom_point(shape=10) + 
+  geom_smooth(method=lm, se=FALSE) + 
+  ggtitle("IBU vs ABV for Beers in the United States") + 
+  theme(plot.title=element_text(hjust=0.5)) + 
+  labs(x="Alcohol by Volume (ABV)", y="International Bitternss Unit (IBU)")
+```
+
+
+## Presentation Data:
+```{r Presentation_Data, fig.width=10,fig.height=6, echo=TRUE}
+mean_abv_by_state=bandb %>% group_by(bandb$State) %>% summarize(meanABV=mean(ABV, na.rm=T))
+mean_ibu_by_state=bandb %>% group_by(bandb$State) %>% summarize(meanIBU=mean(IBU, na.rm=T))
+
+names(mean_abv_by_state)=c("State", "meanABV")
+names(mean_ibu_by_state)=c("State", "meanIBU")
+
+write.csv(median_abv_by_state, file = "State_Median_ABV.csv")
+write.csv(mean_abv_by_state, file = "State_Mean_ABV.csv")
+write.csv(median_ibu_by_state, file = "State_Median_IBU.csv")
+write.csv(mean_ibu_by_state, file = "State_Mean_IBU.csv")
+
+```
+
+|
+|
+|
+|
+|
+|
+|
+|
+| #######END OF DOCUMENT#######
