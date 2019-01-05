@@ -1,0 +1,233 @@
+%% ---------------------------------------------------
+%% Notice that we use the "report" class instead of "article"
+%% ---------------------------------------------------
+\documentclass{article}
+
+\title{MSDS 6371\\
+ TEMPLATE}
+\author{Travis Daun}
+\date{\today}
+
+%% ---------------------------------------------------
+%% 634format specifies the format of our reports
+%% ---------------------------------------------------
+\usepackage{634format}
+
+%% ---------------------------------------------------
+%% enumerate 
+%% ---------------------------------------------------
+\usepackage{enumerate}
+
+%% ---------------------------------------------------
+%% listings is used for including our source code in reports
+%% textcomp provides additional symbols
+%% ---------------------------------------------------
+\usepackage{listings}
+\usepackage{textcomp}
+\usepackage{pdfpages}
+
+%% ---------------------------------------------------
+%% Packages for math environments
+%% ---------------------------------------------------
+\usepackage{amsmath}
+
+%% ---------------------------------------------------
+%% Packages for URLs and hotlinks in the table of contents
+%% and symbolic cross references using \ref
+%% ---------------------------------------------------
+\usepackage{hyperref}
+
+\usepackage[most]{tcolorbox}
+\usepackage[utf8]{inputenc}
+\usepackage{color,soul}
+\usepackage{pgfplots}
+
+%% ---------------------------------------------------
+%% Packages for using HOL-generated macros and displays
+%% ---------------------------------------------------
+\usepackage{holtex}
+\usepackage{holtexbasic}
+\input{commands}
+\pgfmathdeclarefunction{gauss}{3}{%
+  \pgfmathparse{1/(#3*sqrt(2*pi))*exp(-((#1-#2)^2)/(2*#3^2))}%
+}
+\begin{document}
+
+%% --------------------------------------------------- the listings
+%% parameter "language" is set to "ML"
+%% ---------------------------------------------------
+\lstset{language=R,
+    basicstyle=\small\ttfamily,
+    stringstyle=\color{DarkGreen},
+    otherkeywords={0,1,2,3,4,5,6,7,8,9},
+    morekeywords={TRUE,FALSE},
+    deletekeywords={data,frame,length,as,character},
+    keywordstyle=\color{blue},
+    commentstyle=\color{DarkGreen},
+}
+\lstset{language=SAS, 
+  breaklines=true,  
+  basicstyle=\ttfamily\bfseries,
+  columns=fixed,
+  keepspaces=true,
+  identifierstyle=\color{blue}\ttfamily,
+  keywordstyle=\color{cyan}\ttfamily,
+  stringstyle=\color{purple}\ttfamily,
+  commentstyle=\color{green}\ttfamily,
+  } 
+
+\maketitle{}
+
+
+
+%% -----------------------------------------------------------
+%% Warning: don't copy and paste chapter, section, and subsection
+%% commands with their labels.  This degrades/confuses cross
+%% references and URL hotlinks within your document!
+%% Use C-c C-s to introduce new sections and labels.
+%% If automatic labels don't work right, execute M-x reftex-mode
+%% (usually twice) to toggle reftex (automatic labeling) off and
+%% on.
+%% -----------------------------------------------------------
+
+%\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Self Grading: Overall]
+%\textbf{\%}\\
+%\begin{tabular}{|c|c|c|}
+%\hline
+%Question & Points & Points\\
+%& Earned & Available\\
+%\hline
+%Turning in Assignment & $ $ & $ $\\
+%\hline
+%Question 1 & $ $ & $  $\\
+%\hline
+%Question 2 & $ $ & $  $\\
+%\hline
+%Question 3 & $ $ & $  $\\
+%\hline
+%Question 4 & $ $ & $  $\\
+%\hline
+%Question 5 & $ $ & $  $\\
+%\hline
+%Question Bonus & $ $ & $  $\\
+%\hline
+%Total & $ $ & $ $\\
+%\hline
+%\hline
+%\end{tabular}\\
+%See individual rubics at end of each answer for details/comments.
+%\end{tcolorbox}
+
+\begin{itemize}
+\item[1.] 
+\item[2.]
+\begin{itemize}
+\item[a.]
+\item[b.]
+\end{itemize}
+\item[3.] 
+\end{itemize}
+\pagebreak
+
+\begin{tcolorbox}[title=Answer 2]
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, 
+  domain=0:6, 
+  samples=100,
+  ymin=0,
+  axis lines*=left, 
+  xlabel=$x$,
+  every axis y label/.style={at=(current axis.above origin),anchor=south},
+  every axis x label/.style={at=(current axis.right of origin),anchor=west},
+  height=5cm, 
+  width=12cm,
+  xtick=\empty, 
+  ytick=\empty,
+  enlargelimits=false, 
+  clip=false, 
+  axis on top,
+  grid = major,
+  hide y axis
+  ]
+
+ \addplot [very thick,cyan!50!black] {gauss(x, 3, 1)};
+
+\pgfmathsetmacro\valueA{gauss(1,3,1)}
+\pgfmathsetmacro\valueB{gauss(2,3,1)}
+\pgfmathsetmacro\valueC{gauss(3,3,1)}
+\pgfmathsetmacro\valueD{gauss(0,3,1)}
+\draw [very thick,black] (axis cs:5,0) -- (axis cs:5,\valueA);
+    
+\draw [gray] (axis cs:3,0) -- (axis cs:3,\valueC);
+%\draw [yshift=-0.2cm, latex-|](axis cs:0, 0) -- node [] {} (axis cs:1, 0);
+\draw [yshift=-0.2cm, |-latex](axis cs:5, 0) -- node [] {} (axis cs:6, 0);
+\draw [yshift=-0.8cm](axis cs:0, 0) -- node [] {} (axis cs:6, 0);
+\draw [yshift=-1cm,very thick,black]    (axis cs:5,0) -- (axis cs:5,\valueA);
+\node[yshift = 2cm, above right] at (axis cs:4, 0)  {$\overline{\rm X}_{IncE16} - \overline{\rm X}_{IncE12}$};
+
+%\draw [yshift=.4cm, latex-latex](axis cs:5, 0) -- node [fill=white] {$0.05$} (axis cs:6, 0);
+\node[yshift=-1.1cm, below] at (axis cs:5, 0)  {$1.648$};
+\node[yshift=-1.5cm, below] at (axis cs:5, 0)  {$t_{0.05,df=473}$};
+\node[yshift=-0.2cm, below] at (axis cs:5.5, 0)  {shade}; 
+\node[below] at (axis cs:3, 0)  {$0$}; 
+\draw[yshift = 1cm, above right, -latex] (axis cs:5.5, 0) -- node []  {$0.05$} (axis cs:5.5,-.1);
+
+\end{axis}
+\end{tikzpicture}
+
+	\end{tcolorbox}
+\pagebreak
+
+%\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Self Grading: Question 1]
+%\begin{tabular}{|c c c|c|l}
+%\hline
+%1.a & Normality & & $+1.5$ & $-1.5$ Plotted total dataset\\
+%&&&&vice each class\\
+%& Equal SD & & $+1.5$ & $-1.5$ Plotted total dataset\\
+%&&&&vice each class\\
+%& Independence & & $+3$\\
+%& Decision & & $+1$\\
+%\hline
+%1.b & R && $+8$ & $-2$ Plotted total dataset\\
+%&&&&vice each class\\
+%\hline
+%1.c & Problem & &$+1$\\
+%& Assumption & &$+1$\\
+%&& Hyp & $+1$\\
+%& & Draw & $+1$\\
+%& & Critical Value & $+1$\\
+%& & Test Statistic & $+1$\\
+%& & p-value & $+1$\\
+%& Decision & Conclusion & $+1$\\
+%& & Confidence Interval & $+1$\\
+%& & Scope & $+1$\\
+%\hline
+%Total & & & $25/30$\\
+%\hline
+%\hline
+%\end{tabular}
+%\end{tcolorbox}
+\pagebreak
+
+
+%% ------------------------------------------
+%% this restarts the section numbering and
+%% changes chapter numbering to letters starting
+%% with A
+%% ------------------------------------------
+\appendix{} 
+
+
+\section{Source Code for Problem 2}
+\label{Problem2}
+
+\textbf{The following code is for \emph{Logging.sas}}
+%\lstinputlisting[language=SAS]{../code/Logging.sas}
+
+\noindent \textbf{The following code is for \emph{Logging.r}}
+%\lstinputlisting[language=r]{../code/Logging.r}
+
+
+
+\end{document}
