@@ -19,7 +19,7 @@ Files in 6306_JKT_Case_Study_1 Directories and Files:
 	A. Beer_Expansion_Project.pptx<p>
 	B. Beers.csv<p>
 	C. Breweries.csv<p>
-	D. CODEBOOK.md<p>
+	D. CODEBOOK.pdf<p>
 	E. JKT_Travis.Rmd<p>
 	F. JKT_Travis.html<p>
 	G. README.md<p>
