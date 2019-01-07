@@ -1,0 +1,16 @@
+\BOOKMARK [0][-]{chapter.1}{Executive Summary}{}% 1
+\BOOKMARK [0][-]{chapter.2}{R and RStudio}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Version}{chapter.2}% 3
+\BOOKMARK [1][-]{section.2.2}{Base Packages}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.3}{Other Packages}{chapter.2}% 5
+\BOOKMARK [0][-]{chapter.3}{Datasets}{}% 6
+\BOOKMARK [1][-]{section.3.1}{beers.csv}{chapter.3}% 7
+\BOOKMARK [1][-]{section.3.2}{breweries.csv}{chapter.3}% 8
+\BOOKMARK [1][-]{section.3.3}{us\137states\173spData\175}{chapter.3}% 9
+\BOOKMARK [0][-]{chapter.4}{Data Wrangling}{}% 10
+\BOOKMARK [1][-]{section.4.1}{Convert State abbreviations to names}{chapter.4}% 11
+\BOOKMARK [1][-]{section.4.2}{Merge beers.csv with breweries.csv}{chapter.4}% 12
+\BOOKMARK [1][-]{section.4.3}{mapdata}{chapter.4}% 13
+\BOOKMARK [0][-]{chapter.5}{Data Analysis}{}% 14
+\BOOKMARK [1][-]{section.5.1}{Data Issues}{chapter.5}% 15
+\BOOKMARK [1][-]{section.5.2}{Final Processed Data Definitions}{chapter.5}% 16
