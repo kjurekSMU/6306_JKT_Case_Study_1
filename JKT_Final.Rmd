@@ -1,7 +1,7 @@
 ---
 title: "Blue Beer's Picasso"
 author: "Karl J. Jurek, Travis R. Daun, Joe Jiang"
-date: "1/2/2019"
+date: "1/7/2019"
 output: 
   html_document:
     keep_md: true
