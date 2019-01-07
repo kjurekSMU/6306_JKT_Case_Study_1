@@ -1,6 +1,6 @@
 Class: MSDS-6306 
 Unit: Case Study #1 
-Purpose: The '6306_JKT_Case_Study_1' directory contains all the directories and files required for the 'Case Study #1' assignment. 
+Purpose: The '6306_JKT_Case_Study_1' directory contains all the directories and files required for the 'Case Study #1' assignment found in the 'Case Study 01.pdf' file. 
 Contact: For any questions please log an Issue 
 
 6306_JKT_Case_Study_1 Directories and Files:
