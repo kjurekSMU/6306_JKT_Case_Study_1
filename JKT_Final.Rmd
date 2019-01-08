@@ -226,6 +226,7 @@ tm_shape(Medians_map_data) +
 ***
 ## 6. Summary statistics for the ABV variable.
 *Minium median ABV is 0.04, the maximum median ABV is 0.0625, the first quartile of median ABVs is 0.055, and the third quartile is 0.058. The median median ABV is 0.056.* 
+
 * This code displays the summary statistics for the ABV variable for the median ABVs by state.
 ```{r Question_6}
 summary(Medians$Median_ABV)
