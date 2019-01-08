@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  5 JAN 2019 16:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  7 JAN 2019 19:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1670,7 +1670,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 100--103
 
  []
 
-<../graphics/beer2.png, id=139, 134.904pt x 543.4704pt>
+<../graphics/beer2.png, id=144, 134.904pt x 543.4704pt>
 File: ../graphics/beer2.png Graphic file (type png)
 
 <use ../graphics/beer2.png>
@@ -1727,21 +1727,21 @@ Overfull \hbox (68.93489pt too wide) in paragraph at lines 316--345
 
 [7
 
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 345.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 345.
+] [8]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 363.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 363.
  (./Codebook.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 345.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 345.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 363.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 363.
 Package rerunfilecheck Info: File `Codebook.out' has not changed.
-(rerunfilecheck)             Checksum: F35478DC525CD838A6455281BB4AA3D2;955.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 345.
+(rerunfilecheck)             Checksum: 845C7B09CC8887F2B5B749D0D5DC6137;1020.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 363.
  ) 
 Here is how much of TeX's memory you used:
- 41834 strings out of 492995
- 961258 string characters out of 6132704
- 1187129 words of memory out of 5000000
- 44729 multiletter control sequences out of 15000+600000
+ 41838 strings out of 492995
+ 961295 string characters out of 6132704
+ 1188129 words of memory out of 5000000
+ 44731 multiletter control sequences out of 15000+600000
  13799 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  63i,11n,101p,10494b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1756,10 +1756,10 @@ sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
 ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
 cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loc
 al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Codebook.pdf (8 pages, 571904 bytes).
+Output written on Codebook.pdf (9 pages, 577082 bytes).
 PDF statistics:
- 216 PDF objects out of 1000 (max. 8388607)
- 167 compressed objects within 2 object streams
- 25 named destinations out of 1000 (max. 500000)
- 290 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 225 PDF objects out of 1000 (max. 8388607)
+ 175 compressed objects within 2 object streams
+ 27 named destinations out of 1000 (max. 500000)
+ 298 words of extra memory for PDF output out of 10000 (max. 10000000)
 
