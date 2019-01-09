@@ -7,8 +7,8 @@ Contact: For any questions please log an Issue
 
 1. '.gitignore' Directory 
 	A. .gitignore 	
-2. Codebook Directory 
-	A. LaTeX Directory 
+2. 'Codebook' Directory 
+	A. 'LaTeX' Directory 
 		1) .DS_Store 
 		2) 634format.sty 
 		3) Codebook.aux 
@@ -23,31 +23,31 @@ Contact: For any questions please log an Issue
 		12) holtexbasic.sty 
 		13) template.pdf 
 		14) template.tex 
-	B. code Directory 
-		1) .Rproj.user Directory 
-			A) 837503D Directory 
-				(1) console06 Directory 
+	B. 'code' Directory 
+		1) '.Rproj.user' Directory 
+			A) '837503D' Directory 
+				(1) 'console06' Directory 
 					(A) INDEX001 
-				(2) pcs Directory 
+				(2) 'pcs' Directory 
 					(A) files-pane.pper 
 					(B) source-pane.pper 
 					(C) windowlayoutstate.pper 
 					(D) workbench-pane.pper 
-				(3) sources/pro Directory 
+				(3) 'sources/pro' Directory 
 					(A) 6D698B43 
 					(B) 8F2F045D 
 					(C) FA8272C8 
 					(D) INDEX 
 				(4) rmd-outputs 
 				(5) saved_source_markers 
-			B) shared/notebooks Directory
+			B) 'shared/notebooks' Directory
 				(1) patch-chunk-names 
 				(2) paths 
 		2) .Rhistory 
 	C. graphics Directory 
 		1) beer.png 
 		2) beer2.png 		
-2. Presentation_Supporting_Documents Directory 
+2. 'Presentation_Supporting_Documents' Directory 
 	A. Ages.xlsx 
 	B. KJurek_Case_Study_1.Rmd 
 	C. KJurek_Case_Study_1.html 
